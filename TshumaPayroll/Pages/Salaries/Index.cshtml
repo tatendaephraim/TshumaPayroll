@@ -1,0 +1,92 @@
+﻿@page
+@using TshumaPayroll.Models
+@model TshumaPayroll.Pages.Salaries.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<h1>👨‍👩‍👦‍👦 Employee Salaries Lists - 🥩 Tshuma Butcheries </h1>
+<br />
+<hr />
+<p>
+    <a class="btn btn-primary btn-md" asp-page="Create">Pay Salary</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Filter by :Salary Month: 
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a class="btn btn-primary btn-md" asp-page="./Index">Back to Full List</a>
+        </p>
+    </div>
+
+</form>
+<hr />
+<table id="SalaryList" class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+             <th>
+                Surname
+            </th>
+            <th>
+                Job Role
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Month
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salaries[0].NetPay)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Salaries)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.JobRole)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalaryMonth)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.NetPay)
+                </td>
+                <td>
+                    <a asp-page="./MainOperationalMenu" asp-route-id="@item.EmployeeId">Generate Payslip</a>
+                    | <a asp-page="./Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Salaries.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Salaries.HasNextPage ? "disabled" : "";
+
+}
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Salaries.PageIndex-1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Salaries.PageIndex+1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

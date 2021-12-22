@@ -1,0 +1,96 @@
+﻿@page
+@model TshumaPayroll.Pages.Employees.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<h1>👨‍👩‍👦‍👦 Employee Lists - 🥩 Tshuma Butcheries </h1>
+<br />
+<hr />
+<p>
+    <a class="btn btn-primary btn-md" asp-page="Create">Add New Employee</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search by :Surname : First Name: 
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a class="btn btn-primary btn-md" asp-page="./Index">Back to Full List</a>
+        </p>
+    </div>
+
+</form>
+
+
+<table id="EmployeeList" class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Last Name
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    First Name
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].JobRole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].Gender)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobRole)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    <a asp-page="./MainOperationalMenu" asp-route-id="@item.EmployeeId">Details</a>
+                    | <a asp-page="/Salaries/Create" asp-route-id="@item.EmployeeId">Pay</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Employees.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Employees.HasNextPage ? "disabled" : "";
+
+}
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Employees.PageIndex-1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Employees.PageIndex+1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

@@ -1,0 +1,85 @@
+﻿@page "{id:int?}"
+@model TshumaPayroll.Pages.Salaries.CreateModel
+@using TshumaPayroll.Models
+
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>Create</h1>
+
+<h4>Salary</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Salary.SalaryMonth" class="control-label"></label>
+                <select asp-for="Salary.SalaryMonth" asp-items="Html.GetEnumSelectList<Month>()"   class="form-control"></select>
+                <span asp-validation-for="Salary.SalaryMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.EmployeeId" class="control-label"></label>
+                <input readonly asp-for="Salary.EmployeeId" class="form-control" value="@Model.Employee.EmployeeId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.BasicSalary" class="control-label"></label>
+                <input asp-for="Salary.BasicSalary" class="input form-control" value="" id ="basicSalary" />
+                <span asp-validation-for="Salary.BasicSalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.MedicalAid" class="control-label"></label>
+                <input asp-for="Salary.MedicalAid" class="input form-control" value="" id="medicalAid"  />
+                <span asp-validation-for="Salary.MedicalAid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.TransportAllowance" class="control-label"></label>
+                <input asp-for="Salary.TransportAllowance" class="input form-control" value="" id="transportAllowance" />
+                <span asp-validation-for="Salary.TransportAllowance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.FuneralCover" class="control-label"></label>
+                <input asp-for="Salary.FuneralCover" class="form-control" value="" id="funeralCover" />
+                <span asp-validation-for="Salary.FuneralCover" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.NSSAPensions" class="control-label"></label>
+                <input asp-for="Salary.NSSAPensions" class="form-control" value ="" id="nssaPensions" />
+                <span asp-validation-for="Salary.NSSAPensions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.Payee" class="control-label"></label>
+                <input asp-for="Salary.Payee" class="form-control" value="" id="payee" />
+                <span asp-validation-for="Salary.Payee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.GrossSalary" class="control-label"></label>
+                <input asp-for="Salary.GrossSalary" class="form-control" value=""  id="grossSalary"/>
+                <span asp-validation-for="Salary.GrossSalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.NetPay" class="control-label"></label>
+                <input asp-for="Salary.NetPay"   class="form-control" value="" id="netPay"/>
+                <span asp-validation-for="Salary.NetPay" class="text-danger"></span>
+                </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>       
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+<script src="~/js/site.js" charset="utf-8"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} 
+    <script type="text/javascript" src="~/Scripts/scripts.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+}
+
+
